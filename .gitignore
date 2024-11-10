@@ -3,6 +3,7 @@
 *.pyc
 # *.ll
 # *.loops
+.env
 tests/**/*.ll
 tests/**/*.loops
 llvm-pass/build/

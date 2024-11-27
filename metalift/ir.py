@@ -1396,9 +1396,6 @@ class Matrix(List[T], Generic[T], Object):
 
     def len(self) -> Int:
         return Int(Call("matrix_length", Int, self.src))
-    
-    def range_list(start: Int, stop: Int, step: Int) -> List[Int]:
-        return List(Call("range_list", List[Int], start, stop, step))
 
     def _check_type_for_numeric_op(
         first: Union["Matrix", Int, int], second: Union["Matrix", Int, int]
@@ -2628,9 +2625,7 @@ class Call(Expr):
 
     def to_python(self) -> str:
         processed_args = [arg.to_python() for arg in self.arguments()]
-        if self.name() in {"range_list"}:
-            return f"list(range({processed_args[0]}, {processed_args[1]}))"
-        elif self.name() in {"list_length", "matrix_length"}:
+        if self.name() in {"list_length", "matrix_length"}:
             return f"len({processed_args[0]})"
         elif self.name() in {"list_get", "matrix_get"}:
             return f"{processed_args[0]}[{processed_args[1]}]"

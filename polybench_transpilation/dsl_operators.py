@@ -1,4 +1,5 @@
-from typing import Callable, List
+from typing import List, Any
+
 
 def matrix_elemwise_add(
     matrix_x: List[List[int]], matrix_y: List[List[int]]
@@ -144,3 +145,71 @@ def vec_scalar_mul(a: int, x: List[int]) -> List[int]:
 
 def vec_scalar_div(a: int, x: List[int]) -> List[int]:
     return [] if len(x) < 1 else [(x[0] // a), *vec_scalar_div(a, x[1:])]
+
+def matrix_vec_mul(matrix: List[List[int]], vector: List[int]) -> List[int]:
+    return [sum(m * v for m, v in zip(row, vector)) for row in matrix]
+
+def matrix_matrix_mul(matrix_a: List[List[int]], matrix_b: List[List[int]]) -> List[List[int]]:
+    if not matrix_a:
+        return []
+    
+    first_row_result = [
+        sum(a * b for a, b in zip(matrix_a[0], col))
+        for col in zip(*matrix_b)  
+    ]
+    
+    return [first_row_result, *matrix_matrix_mul(matrix_a[1:], matrix_b)]
+
+def list_get(lst: List[Any], index: int) -> Any:
+    return lst[index]
+
+def matrix_get(matrix: List[List[Any]], index: int) -> List[Any]:
+    return matrix[index]
+
+def list_append(lst: List[Any], element: Any) -> List[Any]:
+    return lst + [element]
+
+def matrix_append(matrix: List[List[Any]], row: List[Any]) -> List[List[Any]]:
+    return matrix + [row]
+
+def list_prepend(lst: List[Any], element: Any) -> List[Any]:
+    return [element] + lst
+
+def matrix_prepend(matrix: List[List[Any]], row: List[Any]) -> List[List[Any]]:
+    return [row] + matrix
+
+def list_concat(lst1: List[Any], lst2: List[Any]) -> List[Any]:
+    return lst1 + lst2
+
+def list_tail(lst: List[Any], start_index: int) -> List[Any]:
+    return lst[start_index:]
+
+def matrix_tail(matrix: List[List[Any]], start_index: int) -> List[List[Any]]:
+    return matrix[start_index:]
+
+def list_take(lst: List[Any], n: int) -> List[Any]:
+    return lst[:n]
+
+def matrix_take(matrix: List[List[Any]], n: int) -> List[List[Any]]:
+    return matrix[:n]
+
+def vec_slice(vec: List[Any], start: int, end: int) -> List[Any]:
+    return vec[start:end]
+
+def matrix_row_slice(matrix: List[List[Any]], start: int, end: int) -> List[List[Any]]:
+    return matrix[start:end]
+
+def vec_slice_with_length(vec: List[Any], start: int, length: int) -> List[Any]:
+    return vec[start:start + length]
+
+def matrix_row_slice_with_length(matrix: List[List[Any]], start: int, length: int) -> List[List[Any]]:
+    return matrix[start:start + length]
+
+def matrix_col_slice(matrix: List[List[Any]], start: int, end: int) -> List[List[Any]]:
+    return [row[start:end] for row in matrix]
+
+def matrix_col_slice_with_length(matrix: List[List[Any]], start: int, length: int) -> List[List[Any]]:
+    return [row[start:start + length] for row in matrix]
+
+def matrix_transpose(matrix: List[List[Any]]) -> List[List[Any]]:
+    return [list(row) for row in zip(*matrix)]
